@@ -4,9 +4,9 @@
 #include"math.h"
 
 using namespace std;
-//¾ØÕóÏà¹ØÔËËãº¯Êı 
+//çŸ©é˜µç›¸å…³è¿ç®—å‡½æ•° 
 double* findA(double x[100][3],double theta[3]) {
-	double *data3 = new double[100];
+	double *data3 = new double[100];//æ¯ä¸€è¡Œ=Î¸1+Î¸2x2+Î¸3x3
 	double tmp;
 	int i,j;
 	for(i = 0;i<100;i++){
@@ -19,7 +19,7 @@ double* findA(double x[100][3],double theta[3]) {
 	return data3;
 }
 
-double sigmoid(double m){
+double sigmoid(double m){//Î¸1+Î¸2x2+Î¸3x3=m
 	double tmp = exp(-m);
 	double tmp2 = 1/double(1+tmp);
 	return tmp2;
@@ -33,11 +33,11 @@ double *findE(double ga[100],int y[101]){
 	return data5;
 }
 
-double* findGa(double A[100]) {
+double* findGa(double A[100]) {//Aæ¯ä¸€è¡Œ=Î¸1+Î¸2x2+Î¸3x3ï¼ŒGAä¸ºæ¦‚ç‡
 	int i;
 	double *data4  = new  double [100];
 	for(i = 0;i<100;i++)
-	data4[i] = sigmoid(A[i]);
+	data4[i] = sigmoid(A[i]);//ç»“æœä¸ºæ­£çš„æ¦‚ç‡ï¼ˆä¸¤ç§æƒ…å†µï¼‰
 	return data4;
 }
 
@@ -55,27 +55,27 @@ double*findXE(double X[100][3],double e[100]){
 	return data6;
 }
 
-double findcost( double ga[100],int y[101]){
-	double cost = 0;
-	int i;
-	for(i = 0;i<100;i++) {
-	    cost = cost + y[i]*log(ga[i])+(1-y[i])*log(1-ga[i]);
-	}
-	cost = -cost/100;
-	return cost;
-}
+// double findcost( double ga[100],int y[101]){
+// 	double cost = 0;
+// 	int i;
+// 	for(i = 0;i<100;i++) {
+// 	    cost = cost + y[i]*log(ga[i])+(1-y[i])*log(1-ga[i]);
+// 	}
+// 	cost = -cost/100;
+// 	return cost;
+// }
 
 int main() {
 	double data[201];
-	double data2[100][3];//±£´æx(Êı¾İ)£¬100*3µÄ¾ØÕó£¬µÚÒ»ÁĞÎª1
-	int y[101];//1ºÍ0Á½ÖÖÇé¿ö 
-	double *A;//¾ØÕóAµÈÓÚX*theta 
-	double *ga;//¾ØÕógaµÈÓÚg(A),ÆäÖĞg(z)Îªsigmoidº¯Êı 
-	double *error;//¾ØÕóerrorÎªg(A)-y 
-	double *xe;//¾ØÕóxe
-	double alpha;//3ÖÖÇé¿ö 
-	double theta[3];//³õÊ¼ÖµÊäÈë;
-	int test[100];//Óëy[100]×÷±È½Ï 
+	double data2[100][3];//ä¿å­˜x(æ•°æ®)ï¼Œ100*3çš„çŸ©é˜µï¼Œç¬¬ä¸€åˆ—ä¸º1
+	int y[101];//1å’Œ0ä¸¤ç§æƒ…å†µ 
+	double *A;//çŸ©é˜µAç­‰äºX*theta 
+	double *ga;//çŸ©é˜µgaç­‰äºg(A),å…¶ä¸­g(z)ä¸ºsigmoidå‡½æ•° 
+	double *error;//çŸ©é˜µerrorä¸ºg(A)-y 
+	double *xe;//çŸ©é˜µxe
+	double alpha;//3ç§æƒ…å†µ 
+	double theta[3];//åˆå§‹å€¼è¾“å…¥;
+	int test[100];//ä¸y[100]ä½œæ¯”è¾ƒ 
 	int testout[100];
 	int i = 0,j = 0,m = 0,n = 0;
 	fstream in;
@@ -84,22 +84,22 @@ int main() {
 		cout<<"Error\n";
 		exit(1);
 	}
-	//½«Êı¾İµ¼ÈëÊı×é 
+	//å°†æ•°æ®å¯¼å…¥æ•°ç»„ 
 	while(!in.eof()){
 		if(m%3!=2) {
 		    in>>data[i];
 		    i++;
-		    in.get();//È¥µô·Ö¸ô·û 
+		    in.get();//å»æ‰åˆ†éš”ç¬¦ 
 		} else {
 			in>>y[j];
 			j++;
-			in.get();//È¥µô·Ö¸ô·û 
+			in.get();//å»æ‰åˆ†éš”ç¬¦ 
 		}
 		m++;
 	}
 	in.close();
 	m = 0;
-	//°ÑÊı¾İµ¼Èë100*3µÄÊı×é£¬ÆäÖĞÃ¿Ò»×éµÚÒ»¸öÊıÎª1 
+	//æŠŠæ•°æ®å¯¼å…¥100*3çš„æ•°ç»„ï¼Œå…¶ä¸­æ¯ä¸€ç»„ç¬¬ä¸€ä¸ªæ•°ä¸º1 
 	for (i = 0;i<100;i++){
 		data2[i][0] = 1;
 		for(j = 1;j<3;j++){
@@ -116,7 +116,7 @@ int main() {
 	ga = findGa(A);
     error = findE(ga,y);
 	xe = findXE(data2,error);
-	for(i = 0;i<3;i++){ //¸üĞÂtheta 
+	for(i = 0;i<3;i++){ //æ›´æ–°theta 
 		theta[i] = theta[i] - alpha*xe[i]/100;
 	}
 	A = findA(data2,theta);
@@ -128,7 +128,7 @@ int main() {
 		oldtheta[i] = theta[i];
         error = findE(ga,y);
         xe = findXE(data2,error);
-        for(i = 0;i<3;i++) //¸üĞÂtheta 
+        for(i = 0;i<3;i++) //æ›´æ–°theta 
 		theta[i] = theta[i] - alpha*xe[i]/100;
 		A = findA(data2,theta);
 		ga = findGa(A);
@@ -146,17 +146,17 @@ int main() {
 	for(i = 0;i<3;i++)
 	cout<<theta[i]<<' ';
 	cout<<endl;
-	for(i = 0;i<100;i++){//Ô¤²âÖµ 
+	for(i = 0;i<100;i++){//é¢„æµ‹å€¼ 
 		if(ga[i]>=0.5)
 		test[i] = 1;
 		else
 		test[i] = 0;
 	}
-	for(i = 0;i<100;i++){//Óëy×÷±È½Ï 
+	for(i = 0;i<100;i++){//ä¸yä½œæ¯”è¾ƒ 
 		if(test[i] == y[i])
 		n++;
 	}
-	cout<<"The accuracy rate is : "<<(double)n/100;//ÕıÈ·ÂÊ
+	cout<<"The accuracy rate is : "<<(double)n/100;//æ­£ç¡®ç‡
 	cout<<"\n";
 	cout<<"Please enter 1 to predict the testdata, 0 to exit\n";
 	cin>>n;
@@ -172,7 +172,7 @@ int main() {
 		i = 0;
 		while(!in2.eof()){
 			in2>>data[i];
-			if(i%2 == 0){//Ìø¹ı·Ö¸ô·û£¬testÎÄ¼ş½Ï¸´ÔÓ 
+			if(i%2 == 0){//è·³è¿‡åˆ†éš”ç¬¦ï¼Œtestæ–‡ä»¶è¾ƒå¤æ‚ 
 				in2.get();
 				in2.get();
 				in2.get();
@@ -191,7 +191,7 @@ int main() {
 			    m++;
 		    }	
 	    }  
-        A = findA(data2,theta);//thetaÒÑ¸üĞÂ 
+        A = findA(data2,theta);//thetaå·²æ›´æ–° 
 	    ga = findGa(A);
 	    for(i = 0;i<100;i++){
 		    if(ga[i]>=0.5)
@@ -204,7 +204,7 @@ int main() {
 	    cout<<testout[i]<<' ';
 	}
 	cout<<'\n';
-	//°ÑÔ¤²â½á¹ûÌí¼ÓÖÁÎÄ±¾£¬Éú³ÉĞÂµÄÎÄ±¾ 
+	//æŠŠé¢„æµ‹ç»“æœæ·»åŠ è‡³æ–‡æœ¬ï¼Œç”Ÿæˆæ–°çš„æ–‡æœ¬ 
 	string str;
 	fstream in3,fout;
 	in3.open("data/LR_TestingSet.txt",ios::in);
