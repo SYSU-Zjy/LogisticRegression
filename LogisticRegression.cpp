@@ -212,7 +212,8 @@ int main() {
 	i = 0;
 	while(getline(in3,str)){
 		char* sb;
-		itoa(testout[i],sb,10);
+		//itoa(testout[i],sb,10);
+		*sb = 48+testout[i];
 		str = str + ','+sb+'\n';
 		fout<<str;
 		i = i+1;
