@@ -211,7 +211,7 @@ int main() {
 	fout.open("data/LR_TestingOutSet.txt",ios::out);
 	i = 0;
 	while(getline(in3,str)){
-		char* sb;
+		char* sb = new char;
 		//itoa(testout[i],sb,10);
 		*sb = 48+testout[i];
 		str = str + ','+sb+'\n';
